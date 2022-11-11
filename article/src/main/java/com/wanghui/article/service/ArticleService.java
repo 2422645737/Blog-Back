@@ -1,11 +1,12 @@
 package com.wanghui.article.service;
 
 import com.wanghui.article.pojo.Article;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.List;
+import com.wanghui.common.utils.PageUtils;
 
 public interface ArticleService {
-    public List<Article> findAll() throws IOException;
+    public PageUtils<Article> findAll(long current, long size); /*获取所有文章*/
+
+    Article getArticleById(Integer id);        /*根据id查找文章*/
+
+
 }

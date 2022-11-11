@@ -2,25 +2,29 @@ package com.wanghui.article.controller;
 
 import com.wanghui.article.pojo.Article;
 import com.wanghui.article.service.ArticleService;
+import com.wanghui.common.VO.RequestParam;
+import com.wanghui.common.utils.PageUtils;
+import com.wanghui.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.List;
 
-@Controller
-@RequestMapping("article")
+@RestController
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-    @RequestMapping("findAll")
-    public void findAll() throws IOException {
-        List<Article> all = articleService.findAll();
-        for (Article article : all) {
-            System.out.println(article);
-        }
+
+    @GetMapping("articles")   /*获取所有文章，用于测试*/
+    public R findAll(RequestParam param){
+
+        PageUtils<Article> all = articleService.findAll(param.getCurrent(),param.getSize());
+        return R.ok().put("articles",all);
+    }
+
+    @GetMapping("articles/{id}")      /*通过id获取文章*/
+    public R getArticleById(@PathVariable Integer id){
+        Article articleById = articleService.getArticleById(id);
+        return R.ok().put("article",articleById);
     }
 
 }
