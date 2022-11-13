@@ -1,5 +1,6 @@
 package com.wanghui.article.service;
 
+import com.wanghui.article.VO.CommentMongo;
 import com.wanghui.article.pojo.Article;
 import com.wanghui.common.utils.PageUtils;
 
@@ -8,5 +9,5 @@ public interface ArticleService {
 
     Article getArticleById(Integer id);        /*根据id查找文章*/
 
-
+    CommentMongo test();
 }

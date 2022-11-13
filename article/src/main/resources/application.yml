@@ -6,8 +6,21 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-server:
-  port: 8089
+  data:
+    mongodb:
+      host: 192.168.56.10
+      port: 27017
+      database: comment
+      username: root
+      password: "123456"
+      authentication-database: admin
+
+logging:
+  level:
+    org.springframework.data.mongodb.core: debug
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
+server:
+  port: 8089
