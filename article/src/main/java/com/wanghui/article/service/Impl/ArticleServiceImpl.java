@@ -7,6 +7,7 @@ import com.wanghui.article.pojo.Article;
 import com.wanghui.article.pojo.Comment;
 import com.wanghui.article.pojo.Like;
 import com.wanghui.article.service.ArticleService;
+import com.wanghui.article.service.CommentService;
 import com.wanghui.common.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,20 +26,26 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     public MongoTemplate mongoTemplate;
 
+    @Autowired
+    public CommentService commentService;
     private void packArticles(List<Article> articles){
         for (Article article : articles) {
             packArticle(article);
         }
     }
     private void packArticle(Article article){          //对article进行包装
+        //包装文章内容
+        Query query = new Query(Criteria.where("article_id").is(article.getId()));
+        Article one = mongoTemplate.findOne(query, Article.class);
+        if(one != null)article.setContent(one.getContent());
+
         //包装标签
         List<String> tagsById = articleMapper.getTagsById(article.getId());
         article.setTags(tagsById);
 
         //包装评论
-
-//        List<Comment> commentsById = articleMapper.getCommentsById(article.getId());
-//        article.setComments(commentsById);
+        List<Comment> byArticleId = commentService.findByArticleId(article.getId());
+        article.setComments(byArticleId);
 
         //包装点赞
         List<Like> likesById = articleMapper.getLikesById(article.getId());
@@ -58,15 +65,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticleById(Integer id) {              /*根据id查找文章*/
         Article article = articleMapper.selectById(id);
+        packArticle(article);
         return article;
     }
 
     @Override
-    public CommentMongo test() {
+    public void test() {
         //测试mongoDB
         Query query = new Query(Criteria.where("content").is("hello"));
         CommentMongo one = mongoTemplate.findOne(query, CommentMongo.class);
         System.out.println(one);
-        return null;
     }
 }

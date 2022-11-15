@@ -10,7 +10,7 @@ spring:
     mongodb:
       host: 192.168.56.10
       port: 27017
-      database: comment
+      database: blog
       username: root
       password: "123456"
       authentication-database: admin

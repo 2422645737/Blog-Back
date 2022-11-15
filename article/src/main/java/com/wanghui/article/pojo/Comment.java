@@ -4,12 +4,11 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
 @Data
-@Document(collection = "com")
+@Document(collection = "comment")
 public class Comment {
     @Id
     private String id;
