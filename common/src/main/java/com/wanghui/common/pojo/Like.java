@@ -1,4 +1,4 @@
-package com.wanghui.article.pojo;
+package com.wanghui.common.pojo;
 
 import lombok.Data;
 

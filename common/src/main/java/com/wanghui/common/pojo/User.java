@@ -1,11 +1,9 @@
-package com.wanghui.user.pojo;
+package com.wanghui.common.pojo;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "user")
 public class User {
 
     @Id
@@ -13,5 +11,7 @@ public class User {
 
     private String username;
     private String password;
+    private String avatar;        //用户头像
+
 
 }

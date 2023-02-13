@@ -1,14 +1,12 @@
 package com.wanghui.article.service;
 
-import com.wanghui.article.pojo.Comment;
+import com.wanghui.common.pojo.Comment;
 
 import java.util.List;
 
 public interface CommentService {
-    public List<Comment> findAll();
 
-
-    public List<Comment> findByArticleId(Integer id);        //根据文章id查询评论
+    public List<Comment> findByArticleId(String id);        //根据文章id查询评论
 
     public boolean saveComment(Comment comment);         //保存评论
 

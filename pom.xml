@@ -13,6 +13,7 @@
         <module>article</module>
         <module>common</module>
         <module>user</module>
+        <module>music</module>
     </modules>
 
 </project>

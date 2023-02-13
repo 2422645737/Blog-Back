@@ -1,10 +1,9 @@
 package com.wanghui.article.controller;
 
-import com.wanghui.article.pojo.Comment;
+import com.wanghui.common.pojo.Comment;
 import com.wanghui.article.service.CommentService;
 import com.wanghui.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,19 +13,13 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("comment/get")     /*获取所有评论*/
-    public R getComment(){
-        List<Comment> all = commentService.findAll();
-        return R.ok().put("comment",all);
-    }
-
     @GetMapping("comment/aid/{id}")         /*根据文章id获取评论*/
-    public R getCommentByArticleId(@PathVariable Integer id){
+    public R getCommentByArticleId(@PathVariable String id){
         List<Comment> byArticleId = commentService.findByArticleId(id);
         return R.ok().put("comment",byArticleId);
     }
 
-    @GetMapping("comment/id/{id}")
+    @GetMapping("comment/id/{id}")      //根据评论id获取评论
     public R getCommentById(@PathVariable String id){
         Comment byCommentId = commentService.findByCommentId(id);
         return R.ok().put("comment",byCommentId);
@@ -34,6 +27,7 @@ public class CommentController {
 
     @PostMapping ("comment")       /*保存评论*/
     public R saveComment(@RequestBody Comment comment){
+        System.out.println(comment);
         boolean ok = commentService.saveComment(comment);
         return ok ? R.ok() : R.error();
     }
@@ -51,7 +45,7 @@ public class CommentController {
     }
 
     @PutMapping("comment/dislike/{id}")
-    public R dislikeComment(@PathVariable String id){    /*评论点赞*/
+    public R dislikeComment(@PathVariable String id){    /*评论取消点赞*/
         boolean ok = commentService.dislikeComment(id);
         return ok ? R.ok() : R.error();
     }
