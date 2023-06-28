@@ -21,19 +21,18 @@ public class BaseService {
 
     public void packArticles(List<Article> articles){
         for (Article article : articles) {
-            packArticle(article);
+            packArticle(article,false);
         }
     }
-    public void packArticle(Article article){          //对article进行包装
-        //包装评论
-        /*封装评论*/
-        List<Comment> byArticleId = commentService.findByArticleId(article.getId());
-        article.setComments(byArticleId);
-
+    public void packArticle(Article article,boolean hasComment){          //对article进行包装
+        if(hasComment){
+            /*封装评论*/
+            List<Comment> byArticleId = commentService.findByArticleId(article.getId());
+            article.setComments(byArticleId);
+        }
 
         /*封装分类*/
-        String articleClass = articleMapper.getArticleClass(article.getId());
+        String articleClass = articleMapper.getArticleClassName(article.getId());
         article.setClass_name(articleClass);
     }
-
 }

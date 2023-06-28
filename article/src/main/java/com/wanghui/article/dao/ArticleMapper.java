@@ -17,15 +17,13 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Select("select class_name from article_class,class " +
             "where article_class.code = class.id " +
-            "and article_class.id = #{id}")  /*根据文章id获取分类名称*/
-    public String getArticleClass(String id);
+            "and article_class.id = #{id}")  /*文章id --> 分类名称*/
+    public String getArticleClassName(String id);
 
-    @Select("select class_name from class where id = #{id}")      /*根据分类id获取分类名称*/
+    @Select("select class_name from class where id = #{id}")      /*分类id --> 分类名称*/
     public String getClassNameById(String id);
-
-    @Select("select id from class where class_name = #{class_name}")      /*根据分类名称获取分类id*/
+    @Select("select id from class where class_name = #{class_name}")      /*分类名称 --> 分类id*/
     public String getClassIdByName(String class_name);
-
 
     @Select("select count(*) from article_class where code = #{id}")        /*获取某个分类下的文章数量*/
     public int getCountByClassId(String id);

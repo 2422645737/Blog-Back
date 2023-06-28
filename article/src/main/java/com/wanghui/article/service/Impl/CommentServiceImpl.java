@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author 24226
+ */
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -48,12 +51,16 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = mongoTemplate.findOne(query, Comment.class,"com");    //获取需要的评论
 
 
-        if(comment == null || !comment.getParent_id().equals(""))return null;    //只针对一级评论
+        if(comment == null || !"".equals(comment.getParent_id())){
+            return null;    //只针对一级评论
+        }
         //整合该评论下的所有评论comment_list
         else{
             List<Comment> byArticleId = findByArticleId(comment.getArticle_id());     //根据文章id获取所有的评论
             for (Comment comment1 : byArticleId) {
-                if(Objects.equals(comment.getId(), comment1.getId()))return comment1;
+                if(Objects.equals(comment.getId(), comment1.getId())){
+                    return comment1;
+                }
             }
             return comment;
         }
@@ -62,7 +69,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean deleteCommentById(String id) {        //根据评论id删除评论
         Comment comment = findByCommentId(id);
-        if(comment == null)return true;
+        if(comment == null){
+            return true;
+        }
         else{
             Query query = new Query(Criteria.where("_id").is(id));
             DeleteResult remove = mongoTemplate.remove(query, Comment.class);
@@ -87,8 +96,12 @@ public class CommentServiceImpl implements CommentService {
         Query query = new Query(Criteria.where("_id").is(id));
         Comment one = mongoTemplate.findOne(query, Comment.class);
         if(one != null){
-            if(one.getLike_num() > 0)one.setLike_num(one.getLike_num() - 1);
-            else one.setLike_num(0);
+            if(one.getLike_num() > 0){
+                one.setLike_num(one.getLike_num() - 1);
+            }
+            else{
+                one.setLike_num(0);
+            }
             Comment save = mongoTemplate.save(one);
             return true;
         }
@@ -107,7 +120,9 @@ public class CommentServiceImpl implements CommentService {
 
         //合并评论
         for (Comment comment : comments) {
-            if(comment.getParent_id().equals(""))mergeComment(comments,comment);
+            if(comment.getParent_id().equals("")){
+                mergeComment(comments,comment);
+            }
         }
 
         //去除所有二级评论
@@ -120,7 +135,9 @@ public class CommentServiceImpl implements CommentService {
             if(Objects.equals(c.getParent_id(), comment.getId())){
                 mergeComment(commentList,c);   //先处理子评论
                 List<Comment> commentList1 = comment.getCommentList();
-                if(commentList1 == null) commentList1 = new ArrayList<>();   //假如评论没有二级评论，则commentList为null，所以额外判断一下
+                if(commentList1 == null){
+                    commentList1 = new ArrayList<>();   //假如评论没有二级评论，则commentList为null，所以额外判断一下
+                }
                 commentList1.add(c);
                 comment.setCommentList(commentList1);
 

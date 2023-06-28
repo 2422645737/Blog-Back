@@ -3,10 +3,17 @@ package com.wanghui.article.controller;
 import com.wanghui.common.pojo.Article;
 import com.wanghui.article.service.ArticleService;
 import com.wanghui.common.VO.MyParam;
+import com.wanghui.common.pojo.User;
 import com.wanghui.common.utils.PageUtils;
 import com.wanghui.common.utils.R;
+import com.wanghui.common.valid.AddGroup;
+import com.wanghui.common.valid.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -14,6 +21,17 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+
+    @GetMapping("test")
+    public R test(@Validated({AddGroup.class}) @RequestBody User user){
+        return R.ok();
+    }
+
+    @GetMapping("test_update")
+    public R testUpdate(@Validated({UpdateGroup.class}) @RequestBody User user){
+        return R.ok();
+    }
+
 
     /*
     * @Descirption 获取所有文章，包含筛选条件
@@ -25,7 +43,7 @@ public class ArticleController {
     * */
     @GetMapping("articles")
     public R findAll(MyParam param){
-        PageUtils<Article> all = articleService.findAll(param,param.getCurrent(),0);
+        PageUtils<Article> all = articleService.findAll(param);
         return R.ok().put("articles",all);
     }
 
@@ -35,6 +53,11 @@ public class ArticleController {
         return R.ok().put("article",articleById);
     }
 
+    @GetMapping("/tags")         //获取所有标签
+    public R getTags(){
+        List<String> tags = articleService.getTags();
+        return R.ok().put("tags",tags);
+    }
     @PostMapping("/save")        /*保存文章*/
     public R saveArticle(@RequestBody Article article){
         System.out.println(article);

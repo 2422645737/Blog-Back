@@ -16,8 +16,12 @@ public class R {
 
     }
     public R put(String key,Object value){
-        //存放数据
-        HashMap<String,Object> d = new HashMap<>();
+        HashMap<String,Object> d;
+        if(this.getData() == null){
+            d = new HashMap<>();
+        }else{
+            d = this.getData();
+        }
         d.put(key,value);
         this.setData(d);      //设置数据
         return this;
@@ -35,6 +39,21 @@ public class R {
         result.setFlag(true);          //设置标签
         result.setCode(ResultCodeEnum.SUCCESS.getCode());      //设置状态码
         result.setMessage(ResultCodeEnum.SUCCESS.getMsg());    //设置消息
+        return result;
+    }
+
+    public static R ok(Integer code,String message){
+        R result = new R();
+        result.setFlag(true);
+        result.setCode(code);      //设置状态码
+        result.setMessage(message);    //设置消息
+        return result;
+    }
+    public static R error(Integer code,String message){
+        R result = new R();
+        result.setFlag(false);
+        result.setCode(code);      //设置状态码
+        result.setMessage(message);    //设置消息
         return result;
     }
     public Boolean getFlag() {

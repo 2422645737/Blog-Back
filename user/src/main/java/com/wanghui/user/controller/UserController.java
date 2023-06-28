@@ -4,6 +4,7 @@ import com.wanghui.common.pojo.User;
 import com.wanghui.common.utils.R;
 import com.wanghui.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +14,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping("string")
+    public R getString(){
+        return R.ok().put("msg","hello world");
+    }
 
     @PostMapping("regist")
     public R regist(@RequestBody User user){

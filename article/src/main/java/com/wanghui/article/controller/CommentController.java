@@ -9,17 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("comment/aid/{id}")         /*根据文章id获取评论*/
+    @GetMapping("aid/{id}")         /*根据文章id获取评论*/
     public R getCommentByArticleId(@PathVariable String id){
         List<Comment> byArticleId = commentService.findByArticleId(id);
         return R.ok().put("comment",byArticleId);
     }
 
-    @GetMapping("comment/id/{id}")      //根据评论id获取评论
+    @GetMapping("id/{id}")      //根据评论id获取评论
     public R getCommentById(@PathVariable String id){
         Comment byCommentId = commentService.findByCommentId(id);
         return R.ok().put("comment",byCommentId);
@@ -32,7 +33,7 @@ public class CommentController {
         return ok ? R.ok() : R.error();
     }
 
-    @DeleteMapping("comment/id/{id}")    /*删除评论*/
+    @DeleteMapping("id/{id}")    /*删除评论*/
     public R deleteComment(@PathVariable String id){
         boolean ok = commentService.deleteCommentById(id);
         return ok ? R.ok() : R.error();
