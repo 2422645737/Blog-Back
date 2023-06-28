@@ -1,11 +1,12 @@
 spring:
-  application:
-    name: article
   datasource:
     url: jdbc:mysql://192.168.56.10:3306/db_blog
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+  elasticsearch:
+    rest:
+      uris: 192.168.56.10:9200
   data:
     mongodb:
       host: 192.168.56.10
@@ -14,7 +15,8 @@ spring:
       username: root
       password: "123456"
       authentication-database: admin
-
+  application:
+    name: article
 logging:
   level:
     org.springframework.data.mongodb.core: debug

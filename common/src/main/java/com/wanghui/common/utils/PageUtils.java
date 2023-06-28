@@ -2,6 +2,7 @@ package com.wanghui.common.utils;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 
@@ -16,6 +17,14 @@ public class PageUtils<T> {
 
     public PageUtils(){
 
+    }
+
+    //仅针对于mongodb数据进行封装
+    public PageUtils(List<T> items,long current, long size,long total){
+        this.setCurrent(current);
+        this.setSize(size);
+        this.setTotal(total);
+        this.setRecords(items);
     }
     public PageUtils(Page<T> page){
         this.current = page.getCurrent();

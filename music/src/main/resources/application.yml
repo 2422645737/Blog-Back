@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.56.10:3306/db_blog
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: music
+  data:
+    mongodb:
+      host: 192.168.56.10
+      port: 27017
+      database: blog
+      username: root
+      password: "123456"
+      authentication-database: admin
+logging:
+  level:
+    org.springframework.data.mongodb.core: debug
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+server:
+  port: 8088

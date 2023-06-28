@@ -1,9 +1,13 @@
 package com.wanghui.user;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.wanghui.user","com.wanghui.common.config"})   //扫描common配置类
+@MapperScan("com.wanghui.user.dao")
+//@EnableDiscoveryClient
 public class UserApplication {
 
     public static void main(String[] args) {
