@@ -20,7 +20,10 @@ public class ArticleServiceImpl extends BaseService implements ArticleService{
     @Override      //获取所有文章（包含检索条件）
     public PageUtils<Article> findAll(MyParam param){        /*查找所有文章并进行分页*/
         //判断查询条件
-        int type = 0;  //表示无条件查询
+
+        //表示无条件查询
+        int type = 0;
+
         if(param.getClass_id() != null && !Objects.equals(param.getClass_id(), "0")){
             type = 1;    //根据分类查询
         }
